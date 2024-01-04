@@ -55,7 +55,7 @@
    * user.updated
    * user.password_reset
    * user.deleted
-- Fixed bug where simulation mode setting would apply to usage of the sendEmail method that were not tiggered through the API endpoint.  Simulation mode will now only affect request to the /ses/send endpoint.
+- Fixed bug where simulation mode setting would apply to usage of the sendEmail method that were not tiggered through the API endpoint.  Simulation mode will now only affect request to the /mailer/send endpoint.
 - Updated from javascript to typescript
 - License updated to GPL v3
 

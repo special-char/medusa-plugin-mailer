@@ -4,7 +4,7 @@ import { z } from "zod"
 import { getConfigFile } from "medusa-core-utils"
 import { ConfigModule, authenticate } from "@medusajs/medusa"
 import { MedusaError } from "@medusajs/utils"
-import { SESOptions } from "../services/ses"
+import { SESOptions } from "../services/mailer"
 
 const router = Router()
 
@@ -13,14 +13,14 @@ export default (rootDirectory: string): Router | Router[] => {
    // const { projectConfig } = configModule
    const { configModule: { projectConfig, plugins } } = getConfigFile(rootDirectory, "medusa-config") as { configModule: ConfigModule }
    const adminCorsOptions = { origin: projectConfig.admin_cors.split(","), credentials: true }
-   // const sesConfig: SESOptions = configModule.plugins.find((p: any) => p.resolve === "medusa-plugin-ses")['options']
-   const sesConfig: SESOptions = plugins.find((p: any) => p.resolve === "medusa-plugin-ses")['options']
+   // const sesConfig: SESOptions = configModule.plugins.find((p: any) => p.resolve === "medusa-plugin-mailer")['options']
+   const sesConfig: SESOptions = plugins.find((p: any) => p.resolve === "medusa-plugin-mailer")['options']
    const passKey = sesConfig.enable_endpoint
 
-   router.use("/admin/ses/", cors(adminCorsOptions), authenticate())
+   router.use("/admin/mailer/", cors(adminCorsOptions), authenticate())
 
    // ADMIN - GET TEMPLATE PREVIEW
-   router.get("/admin/ses/templates/:id/preview", async (req, res) => {
+   router.get("/admin/mailer/templates/:id/preview", async (req, res) => {
       const schema = z.object({
          id: z.string().min(1).max(100),
       })
@@ -36,7 +36,7 @@ export default (rootDirectory: string): Router | Router[] => {
    })
 
    // ADMIN - GET TEMPLATE
-   router.get("/admin/ses/templates/:id", async (req, res) => {
+   router.get("/admin/mailer/templates/:id", async (req, res) => {
       const schema = z.object({
          id: z.string().min(1).max(100),
       })
@@ -51,7 +51,7 @@ export default (rootDirectory: string): Router | Router[] => {
    })
 
    // ADMIN - DELETE TEMPLATE
-   router.delete("/admin/ses/templates/:id", async (req, res) => {
+   router.delete("/admin/mailer/templates/:id", async (req, res) => {
       const schema = z.object({
          id: z.string().min(1).max(100),
       })
@@ -66,8 +66,8 @@ export default (rootDirectory: string): Router | Router[] => {
    })
 
    // ADMIN - CREATE TEMPLATE
-   router.use("/admin/ses/templates", json())
-   router.post("/admin/ses/templates", async (req, res) => {
+   router.use("/admin/mailer/templates", json())
+   router.post("/admin/mailer/templates", async (req, res) => {
       const schema = z.object({
          templateId: z.string().min(1),
          subject: z.string(),
@@ -85,8 +85,8 @@ export default (rootDirectory: string): Router | Router[] => {
    })
 
    // ADMIN - UPDATE TEMPLATE
-   router.use("/admin/ses/templates/:id", json())
-   router.post("/admin/ses/templates/:id", async (req, res) => {
+   router.use("/admin/mailer/templates/:id", json())
+   router.post("/admin/mailer/templates/:id", async (req, res) => {
       const schema = z.object({
          templateId: z.string().min(1),
          subject: z.string(),
@@ -104,7 +104,7 @@ export default (rootDirectory: string): Router | Router[] => {
    })
    
    // ADMIN - GET ALL ACTIVE TEMPLATES
-   router.get("/admin/ses/templates", async (req, res) => {   
+   router.get("/admin/mailer/templates", async (req, res) => {   
       const sesService = req.scope.resolve("sesService")
       let response = await sesService.listTemplates()
       return res.json(response)
@@ -118,7 +118,7 @@ export default (rootDirectory: string): Router | Router[] => {
 
 
    // ENDPOINT FOR TESTING TEMPLATES - NO AUTH!!! - REQUIRES PASSKEY
-   router.post("/ses/send", json(), async (req, res) => {
+   router.post("/mailer/send", json(), async (req, res) => {
       if (!passKey) {
          res.sendStatus(404)
       }

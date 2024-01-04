@@ -1,25 +1,25 @@
 import { useAdminCustomQuery, useAdminCustomPost, useAdminCustomDelete } from "medusa-react"
 
 export const useSesTemplate = function(id: string) {
-   return useAdminCustomQuery (`/admin/ses/templates/${id}`, ["ses", id])
+   return useAdminCustomQuery (`/admin/mailer/templates/${id}`, ["mailer", id])
 }
 
 export const useSesTemplatePreview = (id: string) => {
-   return useAdminCustomQuery (`/admin/ses/templates/${id}/preview`, ["ses", id])
+   return useAdminCustomQuery (`/admin/mailer/templates/${id}/preview`, ["mailer", id])
 }
 
 export const useSesTemplateDelete = (id: string) => {
-   return useAdminCustomDelete (`/admin/ses/templates/${id}`, ["ses", id])
+   return useAdminCustomDelete (`/admin/mailer/templates/${id}`, ["mailer", id])
 }
 
 export const useSesTemplateCreate = ({ templateId, subject, html, text }) => {
-   return useAdminCustomPost (`/admin/ses/templates`, ["ses", "create"])
+   return useAdminCustomPost (`/admin/mailer/templates`, ["mailer", "create"])
 }
 
 export const useSesTemplateUpdate = ({ templateId, subject, html, text }) => {
-   return useAdminCustomPost (`/admin/ses/templates/${templateId}`, ["ses", "update"])
+   return useAdminCustomPost (`/admin/mailer/templates/${templateId}`, ["mailer", "update"])
 }
 
 export const useSesTemplates = () => {
-   return useAdminCustomQuery (`/admin/ses/templates`, ["ses", "list"])
+   return useAdminCustomQuery (`/admin/mailer/templates`, ["mailer", "list"])
 }

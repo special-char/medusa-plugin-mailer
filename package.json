@@ -1,17 +1,16 @@
 {
-   "name": "medusa-plugin-ses",
+   "name": "medusa-plugin-mailer",
    "version": "3.0.1-canary.7",
-   "description": "AWS SES transactional emails using local handlebars templates",
+   "description": "mailer transactional emails using local handlebars templates",
    "main": "index.js",
    "repository": {
       "type": "git",
-      "url": "https://github.com/pevey/medusa-plugin-ses"
+      "url": "https://github.com/special-char/medusa-plugin-mailer"
    },
-   "homepage:": "https://pevey.com/medusa-plugin-ses",
+   "homepage:": "https://github.com/special-char/medusa-plugin-mailer",
    "author": "Lacey Pevey",
    "license": "GPL-3.0-or-later",
    "dependencies": {
-      "@aws-sdk/client-ses": "^3.425.0",
       "@uiw/react-codemirror": "^4.21.19",
       "handlebars": "^4.7.8",
       "mjml": "^4.14.1",
@@ -40,9 +39,13 @@
       "react email",
       "handlebars email",
       "transactional email",
-      "ses",
-      "simple email service",
-      "aws ses",
-      "aws"
-   ]
+      "simple email service"
+   ],
+   "peerDependencies": {
+      "@medusajs/admin": "^7.1.9",
+      "@medusajs/medusa": "^1.19.0",
+      "@medusajs/utils": "^1.11.2",
+      "medusa-core-utils": "^1.2.0",
+      "medusa-interfaces": "^1.3.7"
+   }
 }

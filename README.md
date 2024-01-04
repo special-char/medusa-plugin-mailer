@@ -1,8 +1,8 @@
-# medusa-plugin-ses
+# medusa-plugin-mailer
 
 Notifications plugin for Medusa ecommerce server that sends transactional emails via AWS SES (Simple Email Service).
 
-[Documentation](https://pevey.com/medusa-plugin-ses)
+[Documentation](https://pevey.com/medusa-plugin-mailer)
 
 If you are not familiar with Medusa, you can learn more on [the project web site](https://www.medusajs.com/).
 
@@ -20,7 +20,7 @@ If you are not familiar with Medusa, you can learn more on [the project web site
 Inside your medusa backend root folder, type:
 
 ```bash
-yarn add medusa-plugin-ses
+yarn add medusa-plugin-mailer
 ```
 
 Replace "yarn add" with the correct command for your package manager if you are using (for example) npm, pnpm, or bun.
@@ -33,7 +33,7 @@ Enable in your medusa-config.js file similar to other plugins.
 const plugins = [
    //... other plugins
   {
-    resolve: "medusa-plugin-ses",
+    resolve: "medusa-plugin-mailer",
     options: {
       access_key_id: process.env.SES_ACCESS_KEY_ID,
       secret_access_key: process.env.SES_SECRET_ACCESS_KEY,
@@ -124,7 +124,7 @@ Make sure you consider security and enable proper protections on your endpoint i
 
 ## Testing
 
-This plugin adds an endpoint at http://[server]/ses/send
+This plugin adds an endpoint at http://[server]/mailer/send
 
 By default, the endpoint will refuse to send any emails.
 This endpoint may be useful for testing purposes in a development environment or for use by related applications.
@@ -133,7 +133,7 @@ There is NO SECURITY on the endpoint by default. Most people will NOT need to en
 If you are certain that you want to enable it and that you know what you are doing,
 set the environment variable SES_ENABLE_ENDPOINT to the string you will use as your pass key when sending requests to the endpoint.
 
-To use the endpoint, POST a json req.body with: pass_key, template_id, from, to, and data to /ses/send.
+To use the endpoint, POST a json req.body with: pass_key, template_id, from, to, and data to /mailer/send.
 
 Example:
 
@@ -155,4 +155,4 @@ SES_ENABLE_ENDPOINT="42"
 }
 ```
 
-Setting the enable_sim_mode option to true will cause the endpoint to return information about whether the template was successfully compiled and the compiled result, but it will not actually send the email.  This setting only applies to calls to the ses/send endpoint.  It does not affect other calls to the notification service from within Medusa, which will still send emails as per usual.
+Setting the enable_sim_mode option to true will cause the endpoint to return information about whether the template was successfully compiled and the compiled result, but it will not actually send the email.  This setting only applies to calls to the mailer/send endpoint.  It does not affect other calls to the notification service from within Medusa, which will still send emails as per usual.
